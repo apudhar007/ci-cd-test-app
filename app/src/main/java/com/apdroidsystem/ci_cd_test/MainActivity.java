@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.apdroidsystem.ci_cd_test.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,41 +21,31 @@ public class MainActivity extends AppCompatActivity {
 
         tvDisplay = findViewById(R.id.tvDisplay);
 
-        int[] numericButtons = {
-                R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
-                R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9
-        };
+        // Numeric buttons
+        findViewById(R.id.btn0).setOnClickListener(numericListener);
+        findViewById(R.id.btn1).setOnClickListener(numericListener);
+        findViewById(R.id.btn2).setOnClickListener(numericListener);
+        findViewById(R.id.btn3).setOnClickListener(numericListener);
+        findViewById(R.id.btn4).setOnClickListener(numericListener);
+        findViewById(R.id.btn5).setOnClickListener(numericListener);
+        findViewById(R.id.btn6).setOnClickListener(numericListener);
+        findViewById(R.id.btn7).setOnClickListener(numericListener);
+        findViewById(R.id.btn8).setOnClickListener(numericListener);
+        findViewById(R.id.btn9).setOnClickListener(numericListener);
 
-        View.OnClickListener listener = v -> {
-            Button b = (Button) v;
-            currentInput += b.getText().toString();
-            tvDisplay.setText(currentInput);
-        };
+        // Operation buttons
+        findViewById(R.id.btnAdd).setOnClickListener(opListener);
+        findViewById(R.id.btnSub).setOnClickListener(opListener);
+        findViewById(R.id.btnMul).setOnClickListener(opListener);
+        findViewById(R.id.btnDiv).setOnClickListener(opListener);
 
-        for (int id : numericButtons) {
-            findViewById(id).setOnClickListener(listener);
-        }
-
+        // Action buttons
         findViewById(R.id.btnC).setOnClickListener(v -> {
             currentInput = "";
             firstValue = Double.NaN;
             operator = "";
             tvDisplay.setText("0");
         });
-
-        View.OnClickListener opListener = v -> {
-            Button b = (Button) v;
-            if (!currentInput.isEmpty()) {
-                firstValue = Double.parseDouble(currentInput);
-                operator = b.getText().toString();
-                currentInput = "";
-            }
-        };
-
-        findViewById(R.id.btnAdd).setOnClickListener(opListener);
-        findViewById(R.id.btnSub).setOnClickListener(opListener);
-        findViewById(R.id.btnMul).setOnClickListener(opListener);
-        findViewById(R.id.btnDiv).setOnClickListener(opListener);
 
         findViewById(R.id.btnEq).setOnClickListener(v -> {
             if (!Double.isNaN(firstValue) && !currentInput.isEmpty()) {
@@ -72,4 +63,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private final View.OnClickListener numericListener = v -> {
+        Button b = (Button) v;
+        currentInput += b.getText().toString();
+        tvDisplay.setText(currentInput);
+    };
+
+    private final View.OnClickListener opListener = v -> {
+        Button b = (Button) v;
+        if (!currentInput.isEmpty()) {
+            firstValue = Double.parseDouble(currentInput);
+            operator = b.getText().toString();
+            currentInput = "";
+        }
+    };
 }
